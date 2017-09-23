@@ -67,7 +67,7 @@ triple x = 3 * x
 
 f :: Integer -> Integer
 f n | esMultiploDe 6 n = div (cuadrado n) 2
-     | otherwise = triple n + 1
+    | otherwise = triple n + 1
 
 g :: (Integer, Integer) -> Integer
 g nm = fst nm * (snd nm + 1)
