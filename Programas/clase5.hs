@@ -85,11 +85,3 @@ sumatoriaC n m | m == 0 = 0
 sumaRacionales :: Integer -> Integer -> Float
 sumaRacionales n m | n == 0 = 0
                    | n >= 1 = sumatoriaC n m + sumaRacionales (n-1) m
-
-
-
-
-
-
-
-

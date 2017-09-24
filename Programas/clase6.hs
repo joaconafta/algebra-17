@@ -85,7 +85,7 @@ par n | (valorAbsoluto n) > 1 = par (n-2)
 --DUDA goldbachHasta conjetura, todo numero par mayor que 2 se puede escribir como suma de dos primos. Probar la conjetura hasta n
 goldbachHasta :: Integer -> Bool
 goldbachHasta n | n == 2 = True
-				| n < 2 = False 
+                | n < 2 = False 
                 | not (par n) = goldbachHasta (n-1)
                 | par n && esSumaDeDosPrimos n = goldbachHasta (n-2)
                 | otherwise = False
@@ -113,4 +113,3 @@ maxCollatz :: Integer -> Integer -> Integer
 maxCollatz n m | n == 1 = m
                | collatz m < collatz n = maxCollatz (n-1) n
                | otherwise = maxCollatz (n-1) m
-
