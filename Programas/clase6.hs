@@ -38,6 +38,36 @@ algunoEsCero2 (x,y,z) = x*y*z == 0
 productoInterno :: (Float, Float) -> (Float, Float) -> Float
 productoInterno (x1,y1) (x2,y2) = x1*x2 + y1*y2
 
+--Veo si un k es divisor de n
+esDivisor n k = (mod n k) == 0
+
+--Calcula el menor divisor de n desde k
+menorDivisorDesde :: Integer -> Integer -> Integer
+menorDivisorDesde n k | esDivisor n k = k
+                      | otherwise = menorDivisorDesde n (k+1)
+
+--Devuelve si n es primo o no
+esPrimo :: Integer -> Bool
+esPrimo n = (menorDivisorDesde n 2 == n)
+
+--DUDA Devuelve el n-esimo numero primo
+nesimoPrimo :: Integer -> Integer -> Integer -> Integer
+nesimoPrimo n k m | m == n = (k-1)
+                  | esPrimo k =  nesimoPrimo n (k+1) (m+1)
+                  | otherwise =  nesimoPrimo n (k+1) m
+
+--FUNCIONA PERO NO ES LA MEJOR MANERA (ESTOY PASANDO UN PARAMETRO DE MAS)
+--DUDA esSumaDeDosPrimos dado n determina si se puede escribir como suma de dos numeros primos
+esSumaDeDosPrimos2 :: Integer -> Integer -> Bool
+esSumaDeDosPrimos2 n k | k == n = False
+                       | esPrimo (n - (nesimoPrimo k 2 0)) = True
+                       | otherwise = esSumaDeDosPrimos2 n (k+1)
+
+--DUDA esSumaDeDosPrimos dado n determina si se puede escribir como suma de dos numeros primos
+esSumaDeDosPrimos :: Integer -> Bool
+esSumaDeDosPrimos n | par n = True
+                    | otherwise = esPrimo (n-2)
+
 --Devuelve si un numero es +, - ó 0
 signo n | n > 0 = 1
         | n == 0 = 0
@@ -51,6 +81,14 @@ par :: Integer -> Bool
 par n | (valorAbsoluto n) > 1 = par (n-2)
       | n == 0 = True
       | n == 1 = False
+
+--DUDA goldbachHasta conjetura, todo numero par mayor que 2 se puede escribir como suma de dos primos. Probar la conjetura hasta n
+goldbachHasta :: Integer -> Bool
+goldbachHasta n | n == 2 = True
+				| n < 2 = False 
+                | not (par n) = goldbachHasta (n-1)
+                | par n && esSumaDeDosPrimos n = goldbachHasta (n-2)
+                | otherwise = False
 
 --sumaDigitos determina la suma de digitos de un numero positivo.
 sumaDigitos :: Integer -> Integer
