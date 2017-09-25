@@ -13,7 +13,6 @@ implica :: Bool -> Bool -> Bool
 implica True False = False
 implica _ _ = True
 
-
 --Sumatoria de i, desde i=1 hasta i=n (No funciona para negativos)
 sumatoria :: Integer -> Integer
 sumatoria n | n == 0 = 0

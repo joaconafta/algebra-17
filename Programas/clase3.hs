@@ -81,4 +81,31 @@ r5 x y = (x < 3 && y < 3) || (x >= 3 && x < 7 && y >= 3 && y < 7) || (x >= 7 && 
 --implementar funciones que si (a,b)R(p,q)
 --a) (a,b)∼(p,q) si existe k e Z tal que (a,b) = k(p,q)
 --r6 :: (Integer,Integer) -> (Integer,Integer) -> Bool
---r6 ab pq =
+--r6 (a,b) (p,q) =
+
+--11)
+--sumaC calcula la suma de dos numeros complejos a + bi se expresa como (a,b) (Float,Float)
+sumaC :: (Float,Float) -> (Float,Float) -> (Float,Float)
+sumaC (a,b) (c,d) = (a+c, b+d)
+
+--12)
+--productoC calcula el producto de dos numeros complejos
+productoC :: (Float,Float) -> (Float,Float) -> (Float,Float)
+productoC (a,b) (c,d) = (a*c + b*d*(-1), a*d + b*c)
+
+--productoPorRealC calcula el producto de un numero real con uno complejo
+productoPorRealC :: Float -> (Float,Float) -> (Float,Float)
+productoPorRealC r (a,b) = (r*a,r*b)
+
+--conjugadoC calcula el conjugado de un numero complejo
+conjugadoC :: (Float,Float) -> (Float,Float)
+conjugadoC (a,b) = (a,(-1)*b)
+
+--inversoC calcula el inverso de un numero complejo
+inversoC :: (Float,Float) -> (Float,Float)
+inversoC (a,b) = productoPorRealC (1 / (a**2 + b**2)) (conjugadoC (a,b))
+
+--13)
+--raices dados a,b,c en R devuelve las raices de ax^2 + bx + c 
+--raices :: Float -> Float -> Float -> (Float,Float) -> (Float,Float)
+--raices a b c | b**2 - 4*a*c >= 0 = (((-1)*b + sqrt(b**2 - 4*a*c))/(2*a),0) (((-1)*b - sqrt(b**2 - 4*a*c))/(2*a),0)
