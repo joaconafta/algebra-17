@@ -80,8 +80,12 @@ r5 x y = (x < 3 && y < 3) || (x >= 3 && x < 7 && y >= 3 && y < 7) || (x >= 7 && 
 --Dados (a,b) y (p,q) en ZxZ - {(0,0)} determinar el tipo
 --implementar funciones que si (a,b)R(p,q)
 --a) (a,b)∼(p,q) si existe k e Z tal que (a,b) = k(p,q)
---r6 :: (Integer,Integer) -> (Integer,Integer) -> Bool
---r6 (a,b) (p,q) =
+r6 :: (Integer,Integer) -> (Integer,Integer) -> Bool
+r6 (a,b) (p,q) = (div a p) == (div b q) && (mod a p) == (mod b q) && (mod b q) == 0
+
+--b) (a,b)∼(p,q) si existe k e R tal que (a,b) = k(p,q)
+r7 :: (Float,Float) -> (Float,Float) -> Bool
+r7 (a,b) (p,q) = (a / p) == (b / q)
 
 --11)
 --sumaC calcula la suma de dos numeros complejos a + bi se expresa como (a,b) (Float,Float)
@@ -103,9 +107,14 @@ conjugadoC (a,b) = (a,(-1)*b)
 
 --inversoC calcula el inverso de un numero complejo
 inversoC :: (Float,Float) -> (Float,Float)
-inversoC (a,b) = productoPorRealC (1 / (a**2 + b**2)) (conjugadoC (a,b))
+inversoC (a,b) = productoPorRealC (1 / (a^2 + b^2)) (conjugadoC (a,b))
+
+--calcula el discriminante de la resolvente
+disc :: Float -> Float -> Float -> Float
+disc a b c = b^2 - 4*a*c 
 
 --13)
 --raices dados a,b,c en R devuelve las raices de ax^2 + bx + c 
---raices :: Float -> Float -> Float -> (Float,Float) -> (Float,Float)
---raices a b c | b**2 - 4*a*c >= 0 = (((-1)*b + sqrt(b**2 - 4*a*c))/(2*a),0) (((-1)*b - sqrt(b**2 - 4*a*c))/(2*a),0)
+raices :: Float -> Float -> Float -> ((Float, Float),(Float, Float))
+raices a b c | (disc a b c) >= 0 = ((((-1)*b + sqrt(disc a b c)) / (2*a), 0), (((-1)*b - sqrt(disc a b c)) / (2*a), 0))
+             | (disc a b c) < 0 = ((((-1)*b) / (2*a),(sqrt((-1)*(disc a b c))) / (2*a)),(((-1)*b) / (2*a),(-1)*(sqrt((-1)*(disc a b c))) / (2*a)))

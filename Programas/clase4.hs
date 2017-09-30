@@ -24,8 +24,8 @@ bn n | n == 1 = 1
 cn :: Integer -> Integer
 cn n | n == 1 = (-3)
      | n == 2 = 6
-     | n > 2 && (not(par (n-2))) = (-(cn (n-1)) - 3)
-     | n > 2 && (par (n-2)) = (cn (n-1)) + 2 * (cn (n-2)) + 9
+     | n > 2 && (not(esPar (n-2))) = (-(cn (n-1)) - 3)
+     | n > 2 && (esPar (n-2)) = (cn (n-1)) + 2 * (cn (n-2)) + 9
 
 --Sumatoria de i, desde i=1 hasta i=n (No funciona para negativos)
 sumatoria :: Integer -> Integer
@@ -56,8 +56,8 @@ signo n | n > 0 = 1
 valorAbsoluto :: Integer -> Integer
 valorAbsoluto n = (signo n) * n
 
-par :: Integer -> Bool
-par n | (valorAbsoluto n) > 1 = par (n-2)
+esPar :: Integer -> Bool
+esPar n | (valorAbsoluto n) > 1 = esPar (n-2)
       | n == 0 = True
       | n == 1 = False
 

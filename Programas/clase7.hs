@@ -30,11 +30,6 @@ tieneDosElementos :: [a] -> Bool
 tieneDosElementos (_:_:[]) = True
 tieneDosElementos _ = False
 
---VER DESPUES Calcula el elemento maximo de una lista
---maximo :: [a] -> Integer
---maximo (x:[]) = x
---maximo (x,xs) | x > head xs =
-
 --Devuelve la productoria de los elementos
 productoria :: [Integer] -> Integer
 productoria [] = 1
@@ -89,6 +84,30 @@ quitar n (x:xs) | x == n = xs
                 | otherwise = x : (quitar n xs)
 
 --Indica si una lista tiene elementos repetidos
---hayRepetidos :: [Integer] -> Bool
---hayRepetidos [] = False
---hayRepetidos (x:xs) =
+hayRepetidos :: [Integer] -> Bool
+hayRepetidos (x:[]) = False
+hayRepetidos (x:xs) | x == head xs = True
+                    | otherwise = hayRepetidos (x:(tail xs)) || hayRepetidos xs
+
+--Elimina los elementos repetidos
+--eliminarRepetidos :: [Integer] -> [Integer]
+--eliminarRepetidos (x:[]) = x:[]
+--eliminarRepetidos (x:xs) | x == head xs = x: eliminarRepetidos (xs)
+
+--Calcula el elemento maximo de una lista
+maximo :: [Integer] -> Integer
+maximo (x:[]) = x
+maximo (x:xs) | x > head xs = maximo (x:(tail xs))
+              | otherwise = maximo xs
+
+--Ordena los elementos de forma creciente
+ordenar :: [Integer] -> [Integer]
+ordenar [] = []
+ordenar (x:xs) | esOrdenada (x:xs) =  (x:xs)
+               | otherwise = ordenar((head xs):(ordenar (x:(tail xs))))
+
+esOrdenada :: [Integer] -> Bool
+esOrdenada (x:[]) = True
+esOrdenada (x:xs) | x > head xs = False
+                  | otherwise = esOrdenada xs
+               
