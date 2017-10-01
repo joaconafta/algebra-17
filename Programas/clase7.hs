@@ -90,10 +90,12 @@ hayRepetidos (x:xs) | x == head xs = True
                     | otherwise = hayRepetidos (x:(tail xs)) || hayRepetidos xs
 
 --Elimina los elementos repetidos
---eliminarRepetidos :: [Integer] -> [Integer]
---eliminarRepetidos (x:[]) = x:[]
---eliminarRepetidos (x:xs) | x == head xs = x: eliminarRepetidos (xs)
-
+eliminarRepetidos :: [Integer] -> [Integer]
+eliminarRepetidos (x:[]) = x:[]
+eliminarRepetidos (x:xs) | x == head xs = eliminarRepetidos (xs)
+                         | x /= head xs && hayRepetidos (x:xs) = eliminarRepetidos((head xs):(eliminarRepetidos (x:(tail xs))))
+                         | otherwise = (x:xs)
+                         
 --Calcula el elemento maximo de una lista
 maximo :: [Integer] -> Integer
 maximo (x:[]) = x

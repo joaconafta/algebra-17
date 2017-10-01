@@ -106,13 +106,17 @@ collatz n | n == 1 = 1
           | par n = 1 + collatz (div n 2)
           | otherwise = 1 + collatz (3*n + 1)
 
---DUDA - HAY FORMA DE HACERLO SIN PASAR DOS PARAMETROS? REHACER
---maxCollatz devuelve el n que mas terminos tiene en la secuencia
---maxCollatz :: Integer -> Integer -> Integer
---maxCollatz n m | n == 1 = m
---               | collatz m < collatz n = maxCollatz (n-1) n
---               | otherwise = maxCollatz (n-1) m
---maxCollatz :: Integer -> Integer -> Integer
---maxCollatz n | n == 1 = n
---             | collatz n < maxCollatz (n-1) = n
---             | otherwise = 
+--Calcula el elemento maximo de una lista
+maximo :: [(Integer,Integer)] -> (Integer, Integer)
+maximo ((x,y):[]) = (x,y)
+maximo ((x,y):xs) | y > snd (head xs) = maximo ((x,y):(tail xs))
+                  | otherwise = maximo xs
+
+--Hace una lista de (n, collatz n)
+listaCollatz :: Integer -> [(Integer,Integer)]
+listaCollatz n | n > 0 = [(n, collatz n)] ++ (listaCollatz (n-1))
+               | n == 0 = []
+
+--Calcula el collatz maximo de la listaCollatz
+maxCollatz :: Integer -> (Integer, Integer)
+maxCollatz n = maximo (listaCollatz n)
