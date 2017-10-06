@@ -37,7 +37,7 @@ productoria (x:xs) = x * productoria xs
 
 --Dado un numero n y una lista xs le suma n a cada elemento de xs
 sumarN :: Integer -> [Integer] -> [Integer]
-sumarN n (x:[]) = [n + x]
+sumarN n [] = []
 sumarN n (x:xs) = (n + x):(sumarN n xs)
 
 --Dada una lista, suma el ultimo elemento a cada elemento de la lista
@@ -89,27 +89,49 @@ hayRepetidos (x:[]) = False
 hayRepetidos (x:xs) | x == head xs = True
                     | otherwise = hayRepetidos (x:(tail xs)) || hayRepetidos xs
 
---Elimina los elementos repetidos
-eliminarRepetidos :: [Integer] -> [Integer]
-eliminarRepetidos (x:[]) = x:[]
-eliminarRepetidos (x:xs) | x == head xs = eliminarRepetidos (xs)
-                         | x /= head xs && hayRepetidos (x:xs) = eliminarRepetidos((head xs):(eliminarRepetidos (x:(tail xs))))
-                         | otherwise = (x:xs)
-                         
+--Elimina los elementos repetidos REHACER CON FUNCION AUX
+--eliminarRepetidos :: [Integer] -> [Integer]
+--eliminarRepetidos (x:[]) = x:[]
+--eliminarRepetidos (x:xs) | x == head xs = eliminarRepetidos (xs)
+--                         | x /= head xs && hayRepetidos (x:xs) = eliminarRepetidos((head xs):(eliminarRepetidos (x:(tail xs))))
+--                         | otherwise = (x:xs)
+
+eliminarAparicion :: Integer -> [Integer] -> [Integer]
+eliminarAparicion n [] = []
+eliminarAparicion n (x:xs) | n == x = eliminarAparicion n xs
+                           | otherwise = x:eliminarAparicion n xs
+--TERMINAR
+--eliminarRepetidos :: [Integer] -> [Integer]
+--eliminarRepetidos [] = []
+--eliminarRepetidos (x:xs) = head (eliminarAparicion x (x:xs)))
+
 --Calcula el elemento maximo de una lista
+--HACERLO DE OTRA FORMA x > m = x other m    m maximo
 maximo :: [Integer] -> Integer
+maximo [] = error "La lista vacia no tiene maximo"
 maximo (x:[]) = x
 maximo (x:xs) | x > head xs = maximo (x:(tail xs))
               | otherwise = maximo xs
+minimo :: [Integer] -> Integer
+minimo [] = error "La lista vacia no tiene maximo"
+minimo (x:[]) = x
+minimo (x:xs) | x < head xs = minimo (x:(tail xs))
+              | otherwise = minimo xs
 
 --Ordena los elementos de forma creciente
 ordenar :: [Integer] -> [Integer]
 ordenar [] = []
-ordenar (x:xs) | esOrdenada (x:xs) =  (x:xs)
-               | otherwise = ordenar((head xs):(ordenar (x:(tail xs))))
+ordenar xs = m': ordenar (quitar m' xs)
+ where m' = minimo xs
+--FORMA 2 (mejor) Quick sort
+--ordenar (x:xs) = ordenar (menoresQue x xs) ++ [x] ++ ordenar (mayoresQue x xs)
+--ordenar [] = []
+--FORMA 1 (mala)
+--ordenar (x:xs) | esOrdenada (x:xs) =  (x:xs)
+--               | otherwise = ordenar((head xs):(ordenar (x:(tail xs))))
 
-esOrdenada :: [Integer] -> Bool
-esOrdenada (x:[]) = True
-esOrdenada (x:xs) | x > head xs = False
-                  | otherwise = esOrdenada xs
-               
+--Devuelve si una lista es ordenada o no
+--esOrdenada :: [Integer] -> Bool
+--esOrdenada (x:[]) = True
+--esOrdenada (x:xs) | x > head xs = False
+--                  | otherwise = esOrdenada xs
