@@ -42,11 +42,11 @@ sumarN n (x:xs) = (n + x):(sumarN n xs)
 
 --Dada una lista, suma el ultimo elemento a cada elemento de la lista
 sumarElUltimo :: [Integer] -> [Integer]
-sumarElUltimo x = sumarN (head (reverse x)) x
+sumarElUltimo xs = sumarN (head (reverse xs)) xs
 
 --Dada una lista, suma el primer elemento a cada elemento de la lista
 sumarElPrimero :: [Integer] -> [Integer]
-sumarElPrimero x = sumarN (head x) x
+sumarElPrimero xs = sumarN (head xs) xs
 
 --Devuelve si un numero es +, - ó 0
 signo n | n > 0 = 1
