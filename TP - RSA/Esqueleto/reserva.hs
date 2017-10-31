@@ -12,6 +12,9 @@ mcd a b = mcd b r
 sonCoprimos :: Integer -> Integer -> Bool
 sonCoprimos a b = mcd a b == 1
 
+inversoModular :: (Integer, (Integer, Integer)) -> Integer
+inversoModular (m,(s,t)) = s
+
 coprimoMenorQueN :: Integer -> Integer -> Integer
 coprimoMenorQueN n i | sonCoprimos n i = i
                      | otherwise = coprimoMenorQueN n (i-1)

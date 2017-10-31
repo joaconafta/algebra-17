@@ -23,8 +23,10 @@ magiaPura (x:xs) = res : magiaPura xs
     dbg = "[DBG] Mis claves son " ++ show (e,d,n) ++ "\n[DBG] Mis primos " ++ show (p,q) ++ "\n"
     (p, q) = elegidor  $ criba 5000
     (e, d, n) = claves p q
-    cif = codificador (d,n) x
-    msg = decodificador (e,n) cif
+    cif = codificador (e,n) x
+--    cif = codificador (d,n) x
+--    msg = decodificador (e,n) cif
+    msg = decodificador (d,n) cif
     esp = espia (d,n) cif
 
 

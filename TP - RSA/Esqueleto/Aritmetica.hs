@@ -24,7 +24,9 @@ coprimoCon n = n-1
 
 --(4)
 inversoMultiplicativo:: Integer -> Integer -> Integer
-inversoMultiplicativo _ _ = 0
+inversoMultiplicativo n m | mcd == 1 = s
+                          | otherwise = error "No existe inverso multiplicativo"
+  where (mcd, (s,t)) = mcdExt n m
 
 -- Función de regalo para exponenciar "rápido"
 modExp :: Integer -> Integer -> Integer -> Integer
@@ -33,10 +35,10 @@ modExp b e m = t * modExp ((b * b) `mod` m) (shiftR e 1) m `mod` m
   where t = if testBit e 0 then b `mod` m else 1
 
 
---FUNCIONES AUXILIARES PARA LA CRIBA (2) -----------------------
+--FUNCIONES AUXILIARES PARA (2) ---------------------------------
 --Veo si un k es divisor de n
 esDivisor :: Integer -> Integer -> Bool
-esDivisor n k = (mod n k) == 0
+esDivisor n k = mod n k == 0
 
 --Calcula el menor divisor de n desde k
 menorDivisorDesde :: Integer -> Integer -> Integer
@@ -53,6 +55,4 @@ primosHastaN 1 = []
 primosHastaN n | esPrimo n = p ++ [n]
                | otherwise = p
   where p = primosHastaN (n-1)
-----------------------------------------------------------------
-
-
+-----------------------------------------------------------------
