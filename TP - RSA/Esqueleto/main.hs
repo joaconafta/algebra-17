@@ -4,6 +4,7 @@ import Aritmetica
 import Catedra
 import Data.Char
 
+
 main = do
   test prueba
 

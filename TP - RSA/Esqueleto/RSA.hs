@@ -20,29 +20,29 @@ decodificador :: Clpri -> Cifrado -> Mensaje
 decodificador (d,n) c = aChars(decodificadorInts (d,n) c)
 
 
-
-
----------------------------------------------------------------
-
+--FUNCIONES AUXILIARES------------------------------------------------------------------------
+--Cacula fi(n) = (p-1)*(q-1)
 funcionEuler :: Integer -> Integer -> Integer
 funcionEuler p q = (p-1)*(q-1)
 
---Codifica un digito del mensaje (un Integer)
+--Codifica un digito del mensaje (Integer)
 codificarDigito :: Clpub -> Integer -> Integer
 codificarDigito (e,n) m | mcd == 1 = modExp m e n
                         | otherwise = (-m)
   where (mcd,(s,t)) = mcdExt m n 
+
+--Decodifica un digito del mensaje (Integer)
+decodificarDigito :: Clpri -> Integer -> Integer
+decodificarDigito (d,n) c | c >= 0 = modExp c d n
+                          | otherwise = (-c)
 
 --Codifica el mensaje cifrado en [Integer]
 codificadorInts :: Clpub -> Cifrado -> Cifrado
 codificadorInts (e,n) [] = []
 codificadorInts (e,n) (m:ms) = (codificarDigito (e,n) m):(codificadorInts (e,n) ms)
 
+--Deodifica el mensaje cifrado en [Integer]
 decodificadorInts :: Clpri -> Cifrado -> Cifrado
 decodificadorInts (d,n) [] = []
 decodificadorInts (d,n) (c:cs) = (decodificarDigito (d,n) c):(decodificadorInts (d,n) cs)
-
-decodificarDigito :: Clpri -> Integer -> Integer
-decodificarDigito (d,n) c | c >= 0 = modExp c d n
-                          | otherwise = (-c)
-
+----------------------------------------------------------------------------------------------
