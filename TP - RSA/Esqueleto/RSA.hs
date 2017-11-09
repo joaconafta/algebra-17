@@ -7,9 +7,9 @@ import Aritmetica
 claves :: Integer -> Integer -> (Integer, Integer, Integer)
 claves p q = (e, d, n)
   where n = p * q
-        e = coprimoCon euler
-        d = inversoMultiplicativo e euler 
-        euler = (funcionEuler p q)
+        e = coprimoCon phi
+        d = inversoMultiplicativo e phi 
+        phi = (funcionEuler p q)
 
 --(6)
 codificador :: Clpub -> Mensaje -> Cifrado
@@ -41,7 +41,7 @@ codificadorInts :: Clpub -> Cifrado -> Cifrado
 codificadorInts (e,n) [] = []
 codificadorInts (e,n) (m:ms) = (codificarDigito (e,n) m):(codificadorInts (e,n) ms)
 
---Deodifica el mensaje cifrado en [Integer]
+--Decodifica el mensaje cifrado en [Integer]
 decodificadorInts :: Clpri -> Cifrado -> Cifrado
 decodificadorInts (d,n) [] = []
 decodificadorInts (d,n) (c:cs) = (decodificarDigito (d,n) c):(decodificadorInts (d,n) cs)

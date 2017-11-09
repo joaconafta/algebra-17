@@ -2,7 +2,6 @@ module Aritmetica where
 import Catedra
 import Data.Tuple
 import Data.Bits
---import System.Random --Agregado para funcion propia elegidorPrimos
 
 
 --(1)
@@ -16,16 +15,18 @@ mcdExt a b = (m, (s, t))
         r = mod a b
 
 --(2)
+--(n-1) para que n no aparezca dentro de la criba
 criba :: Integer -> Set Integer
-criba n = primosHastaN (n-1)
+criba n = primosHastaN (n-1) 
 
 --(3)
+--(n-2) para que 1 < coprimo < n-1
 coprimoCon :: Integer -> Integer
-coprimoCon n = n-1
+coprimoCon n = buscoCoprimoCon n (n-2) 
 
 --(4)
 inversoMultiplicativo :: Integer -> Integer -> Integer
-inversoMultiplicativo n m | mcd == 1 = corregirInversoMult s m 
+inversoMultiplicativo n m | mcd == 1 = mod s m 
                           | otherwise = error "No existe inverso multiplicativo"
   where (mcd, (s,t)) = mcdExt n m
 
@@ -57,17 +58,9 @@ primosHastaN n | esPrimo n = p ++ [n]
                | otherwise = p
   where p = primosHastaN (n-1)
 
---Corrige cuando el inverso multiplicativo es negativo le suma el modulo para dejarlo positivo
-corregirInversoMult :: Integer -> Integer -> Integer
-corregirInversoMult inv m | inv < 0 = inv+m
-                          | otherwise = inv
-
---Funcion propia para elegir de forma aleatoria dos numeros primos de la criba
---elegidorPrimos :: Set Integer -> (Integer, Integer)
---elegidorPrimos xs = (primoRnd, primoRnd2)
---  where primoRnd = elegirPrimo xs (randomRIO (1, length xs))
---        primoRnd2 = elegirPrimo xs (randomRIO (1, length xs))
-
---elegirPrimo :: Set Integer -> Integer -> Integer
---elegirPrimo (x:xs)
+--Busco un m que sea coprimo con n
+buscoCoprimoCon :: Integer -> Integer -> Integer
+buscoCoprimoCon n m | mcd == 1 = m
+                    | otherwise = buscoCoprimoCon n (m-1)
+  where (mcd,(_,_)) = mcdExt n m
 ----------------------------------------------------------------------------------------------

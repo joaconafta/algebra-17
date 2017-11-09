@@ -20,15 +20,16 @@ magiaPura (x:xs) = res : magiaPura xs
   where
     res = "Codificando " ++ show x ++ "\nEl cifrado es " ++ show cif
             ++ "\nBob decodifico " ++ show msg ++ "\nY Miranda espio "
-            ++ show esp ++ "\n" -- ++ dbg -- si le dejamos esto manda informacion de debuggeo
+            ++ show esp ++ "\n" ++ dbg -- si le dejamos esto manda informacion de debuggeo
     dbg = "[DBG] Mis claves son " ++ show (e,d,n) ++ "\n[DBG] Mis primos " ++ show (p,q) ++ "\n"
     (p, q) = elegidor  $ criba 5000
     (e, d, n) = claves p q
     cif = codificador (e,n) x
---    cif = codificador (d,n) x
---    msg = decodificador (e,n) cif
     msg = decodificador (d,n) cif
-    esp = espia (d,n) cif
+    esp = espia (e,n) cif
+--  cif = codificador (d,n) x
+--  msg = decodificador (e,n) cif
+--  esp = espia (d,n) cif
 
 
 elegidor :: Set Integer -> (Integer, Integer)
