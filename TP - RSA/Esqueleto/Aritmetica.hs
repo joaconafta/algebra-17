@@ -5,6 +5,7 @@ import Data.Bits
 
 
 --(1)
+--Algoritmo de Euclides extendido
 mcdExt :: Integer -> Integer -> (Integer, (Integer, Integer))
 mcdExt a 0 = (a, (1, 0))
 mcdExt a b = (m, (s, t))
@@ -25,6 +26,7 @@ coprimoCon :: Integer -> Integer
 coprimoCon n = buscoCoprimoCon n (n-2) 
 
 --(4)
+--Calcula inverso multiplicativo de n modulo m (obtiene x tal que x*n = 1 (mod m))
 inversoMultiplicativo :: Integer -> Integer -> Integer
 inversoMultiplicativo n m | mcd == 1 = mod s m 
                           | otherwise = error "No existe inverso multiplicativo"
@@ -35,6 +37,7 @@ modExp :: Integer -> Integer -> Integer -> Integer
 modExp b 0 m = 1
 modExp b e m = t * modExp ((b * b) `mod` m) (shiftR e 1) m `mod` m
   where t = if testBit e 0 then b `mod` m else 1
+
 
 
 --FUNCIONES AUXILIARES------------------------------------------------------------------------

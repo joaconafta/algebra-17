@@ -31,7 +31,6 @@ magiaPura (x:xs) = res : magiaPura xs
 --  msg = decodificador (e,n) cif
 --  esp = espia (d,n) cif
 
-
 elegidor :: Set Integer -> (Integer, Integer)
 elegidor (x:y:[]) =  (x, y)
 elegidor (x:y:z:[]) = (x, z)
