@@ -15,17 +15,23 @@ mcdExt a b = (m, (s, t))
         (m, (s1, t1)) = mcdExt b r
         r = mod a b
 
-
 --(2)
+--(n-1) para que n no aparezca dentro de la criba
+--criba2 :: Integer -> Set Integer
+--criba2 n = primosHastaN (n-1) 
+
 criba :: Integer -> Set Integer
 criba n = eratostenes [2..(n-1)]
 
+eratostenes :: [Integer] -> [Integer] -- Criba de Eratóstenes (de una lista dada [2..n] te deja sólo los números primos)
+eratostenes [] = []
+eratostenes (x:xs) | x^2 > last xs = (x:xs)
+                   | otherwise = x: eratostenes (filter (\n -> mod n x /= 0) xs)
 
 --(3)
 --(n-2) para que 1 < coprimo < n-1
 coprimoCon :: Integer -> Integer
 coprimoCon n = buscoCoprimoCon n (n-2) 
-
 
 --(4)
 --Calcula inverso multiplicativo de n modulo m (obtiene x tal que x*n = 1 (mod m))
@@ -33,8 +39,6 @@ inversoMultiplicativo :: Integer -> Integer -> Integer
 inversoMultiplicativo n m | mcd == 1 = mod s m 
                           | otherwise = error "No existe inverso multiplicativo"
   where (mcd, (s,t)) = mcdExt n m
-
-
 
 -- Función de regalo para exponenciar "rápido"
 modExp :: Integer -> Integer -> Integer -> Integer
@@ -45,14 +49,33 @@ modExp b e m = t * modExp ((b * b) `mod` m) (shiftR e 1) m `mod` m
 
 
 --FUNCIONES AUXILIARES------------------------------------------------------------------------
---Criba de eratostenes
-eratostenes :: Set Integer -> Set Integer
-eratostenes [] = []
-eratostenes (x:xs) | x^2 > last (x:xs) = (x:xs) -- last de (x:xs) para contemplar el caso en que [x] (en "criba 2" y en "criba 5")
-                   | otherwise = x:eratostenes (filter (\n-> mod n x /= 0) xs) 
+--Veo si un k es divisor de n
+esDivisor :: Integer -> Integer -> Bool
+esDivisor n k = mod n k == 0
+
+--Calcula el menor divisor de n desde k
+--menorDivisorDesde :: Integer -> Integer -> Integer
+--menorDivisorDesde n k | esDivisor n k = k
+--                      | otherwise = menorDivisorDesde n (k+1)
+
+--Devuelve si n es primo o no
+--esPrimo :: Integer -> Bool
+--esPrimo n = (menorDivisorDesde n 2 == n)
+
+esPrimo :: Integer -> Bool
+esPrimo n = (last(eratostenes [1..n]) == n)
+
+
+--Devuelve una lista de todos los primos menores o iguales que n
+--primosHastaN :: Integer -> Set Integer
+--primosHastaN 1 = []
+--primosHastaN n | esPrimo n = p ++ [n]
+--               | otherwise = p
+--  where p = primosHastaN (n-1)
 
 --Busco un m que sea coprimo con n
 buscoCoprimoCon :: Integer -> Integer -> Integer
 buscoCoprimoCon n m | mcd == 1 = m
                     | otherwise = buscoCoprimoCon n (m-1)
   where (mcd,(_,_)) = mcdExt n m
+----------------------------------------------------------------------------------------------

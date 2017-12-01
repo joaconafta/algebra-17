@@ -1,6 +1,7 @@
 module Catedra where
 import Data.Char
 
+
 type Set a = [a]
 type Clpub = (Integer, Integer) -- Clave (e, n)
 type Clpri = (Integer, Integer) -- Clave (d, n)
